@@ -23,7 +23,22 @@ void preorder(struct node *root){
     }
 };
 
-
+int isBST(struct node *root){
+    static struct node *prev = NULL;
+    if(root!=NULL){
+        if (!isBST(root->left)){
+            return 0;
+        }
+        if (prev!=NULL && root->data <= prev->data){
+            return 0;
+        }
+        prev = root;
+        return isBST(root->right);
+    }
+    else{
+        return 1;
+    }
+};
 int main(){
     struct node *p = create(10);
     struct node *p1 = create(5);
@@ -37,5 +52,11 @@ int main(){
     p1->right = p4;
     p2->left = p5;
     preorder(p);
+    if(isBST(p)==1){
+        printf("\nIt Is a BST");
+    }
+    else{
+        printf("\nIt Is not a BST");
+    }
     return 0;
 }
